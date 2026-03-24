@@ -15,5 +15,6 @@ spec:
       containers:
       - name: trend-container
         image: mydockerimage31/trend-app-image:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
