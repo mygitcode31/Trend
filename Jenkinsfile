@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = "mydockerimage31/trend-app-image"
+
     stages {
 
         stage('Clone Code') {
@@ -13,7 +16,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t mydockerimage31/trend-app-image:latest .'
+                sh 'docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} .'
             }
         }
 
@@ -29,15 +32,22 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-                sh 'docker push mydockerimage31/trend-app-image:latest'
+                sh 'docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}'
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                sh 'kubectl apply -f deployment.yml'
                 sh 'kubectl apply -f service.yml'
+                sh 'kubectl set image deployment/trend-deployment trend-app=${DOCKER_IMAGE}:${BUILD_NUMBER} --record'
             }
         }
     }
+    
+    post {
+        always {
+            cleanWs()
+        }
+    }
+
 }
