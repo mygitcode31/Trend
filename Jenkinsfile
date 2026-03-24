@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "mydockerimage31/trend-app-image"
+    }
 
     stages {
 
