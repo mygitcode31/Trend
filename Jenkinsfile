@@ -7,7 +7,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/mygitcode31/Trend.git',
-                    credentialId: 'Git-Cred'
+                    credentialsId: 'Git-Cred'
             }
         }
 
