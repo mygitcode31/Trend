@@ -5,7 +5,9 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'https://github.com/mygitcode31/Trend.git',
+                    credentialId: 'Git-Cred'
             }
         }
 
@@ -17,7 +19,7 @@ pipeline {
 
         stage('Login to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'Dockeruser', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
                     echo $PASS | docker login -u $USER --password-stdin
                     '''
