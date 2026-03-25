@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "mydockerimage31/trend-app-image"
-        BUILD_NUMBER = "latest"
+        DOCKER_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -41,7 +41,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'kubectl apply -f service.yml'
-                sh 'kubectl set image deployment/trend-deployment trend-app=${DOCKER_IMAGE}:${BUILD_NUMBER} --record'
+                sh 'kubectl apply -f deployment.yml
             }
         }
     }
