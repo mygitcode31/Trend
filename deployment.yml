@@ -13,7 +13,7 @@ spec:
         app: trend
     spec:
       containers:
-      - name: trend-container
+      - name: trend-app
         image: mydockerimage31/trend-app-image:latest
         imagePullPolicy: Always
         ports:
