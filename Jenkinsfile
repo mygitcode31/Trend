@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "mydockerimage31/trend-app-image"
+        BUILD_NUMBER = "latest"
     }
 
     stages {
@@ -23,7 +24,7 @@ pipeline {
 
         stage('Login to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Dockeruser', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'Docker-Cred', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     sh '''
                     echo $PASS | docker login -u $USER --password-stdin
                     '''
